@@ -1,0 +1,14 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Express Gallery || Add Image
+  body
+    form(action="/gallery", method="post", enctype="application/x-www-form-urlencoded")
+      label(for="link") Link
+      input(type="text", name="link")
+      label(for="author") Author
+      input(type="text", name="author")
+      label(for="description") Description
+      input(type="text", name="description")
+      input(type="submit", value="Submit Photo")
