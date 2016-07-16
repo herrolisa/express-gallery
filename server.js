@@ -35,26 +35,20 @@ app.post('/gallery', function (req, res) {
   });
 });
 
-// app.post('/gallery', function (req, res) {
-//   req.on('data', function (postData) {
-//     var locals = querystring.parse(postData.toString());
-//     console.log(locals);
-//     Gallery.create(locals, function (err, result) {
-//       if (err) throw err;
-//       res.render('gallery', locals);
-//     });
-//   });
-//   // res.send('You\'ve added a photo!');
-// });
-
 //GET /gallery/[photo id] (page with single photo and links to delete/edit)
 app.get('/gallery/:id', function (req, res) {
   var id = req.params.id;
   Gallery.find(id, function (err, object) {
-    res.render('photo');
+    if (err){
+      res.render('404');
+    }else{
+      res.render('photo', object);
+    }
   });
   // res.send('Here\s the photo for ' + req.params.id + ':<br>Delete This Photo<br>Edit This Photo');
 });
+
+
 
 //GET /gallery/[photo id]/edit (page with form to edit current photo)
 app.get('/gallery/:id/edit', function (req, res) {
