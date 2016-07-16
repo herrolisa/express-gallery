@@ -40,30 +40,47 @@ app.get('/gallery/:id', function (req, res) {
   var id = req.params.id;
   Gallery.find(id, function (err, object) {
     if (err){
-      res.render('404');
+      res.status(404).render('404');
     }else{
       res.render('photo', object);
     }
   });
-  // res.send('Here\s the photo for ' + req.params.id + ':<br>Delete This Photo<br>Edit This Photo');
 });
-
-
 
 //GET /gallery/[photo id]/edit (page with form to edit current photo)
 app.get('/gallery/:id/edit', function (req, res) {
-  res.render('edit-form');
-  // res.send('What would you like to edit for photo ' + req.params.id + ':<br>[author]: ______<br>[link]: ______<br>[description]: ______');
+  var id = req.params.id;
+  Gallery.form(id, function (err) {
+    if (err){
+      res.status(404).render('404');
+    }else{
+      res.render('edit-form');
+    }
+  });
 });
 
 //PUT to /gallery/[photo id]
 app.put('/gallery/:id', function (req, res) {
-  res.send('You\'ve updated ' + req.params.id + '!');
+  var id = req.params.id;
+  Gallery.edit(req.body, id, function (err, object) {
+    if (err){
+      res.status(404).render('404');
+    }else{
+      res.render('photo', object);
+    }
+  });
 });
 
 //DELETE [photo id]
 app.delete('/gallery/:id', function (req, res) {
-  res.send('You\'ve deleted ' + req.params.id + '!');
+  var id = req.params.id;
+  Gallery.delete(id, function (err) {
+    if (err){
+      res.status(404).render('404');
+    }else{
+      res.render('index');
+    }
+  });
 });
 
 var server = app.listen(8080, function () {
