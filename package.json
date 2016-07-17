@@ -24,6 +24,8 @@
     "pug": "^2.0.0-beta3"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
     "morgan": "^1.7.0"
   }
 }
