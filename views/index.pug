@@ -2,19 +2,34 @@ doctype html
 html(lang="en")
   head
     meta(charset="UTF-8")
-    title Express Gallery
+    title Express Gallery || Home Page
+    link(href='css/styles.css', rel='stylesheet')
   body
     div.container
-      header
-        h1 _ARCHITEKT
-        img(src='http://www.dessign.net/architekttheme/wp-content/uploads/architekt21-959x349.jpg', width='50%')
+      div(class=['header', 'clearfix'])
+        div.logo
+          img(src='images/logo.jpg')
+        div.summary
+          p Welcome to our online portfolio, we are small group of passionate designers and architects, looking to change and create amazing digital images to inspire others to follow in our innovative steps. Free Architect WordPress Theme
+      div.main-image
+        img(src='http://www.dessign.net/architekttheme/wp-content/uploads/architekt21-959x349.jpg')
       hr
-      section
-        a(href="#")
-          img(src='http://placehold.it/350x150')
-        p Author
-        p This is a description of the image.
-      section
-        img(src='http://placehold.it/350x150')
-        p Author
-        p This is a description of the image.
+      div.gallery
+        div.gallery-post
+          a(href='#')
+            img(src='http://67.media.tumblr.com/30b1b0d0a42bca3759610242a1ff0348/tumblr_nnjxy1GQAA1tpo3v2o1_540.jpg')
+        div.gallery-post
+          a(href='#')
+            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
+        div.gallery-post
+          a(href='#')
+            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
+        div.gallery-post
+          a(href='#')
+            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
+        div.gallery-post
+          a(href='#')
+            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
+        div.gallery-post
+          a(href='#')
+            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
