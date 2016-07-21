@@ -1,16 +1,36 @@
 @import 'partials/reset';
 @import 'partials/clearfix';
 
+/// VARIABLES ///
+$light-grey: #CCCCCC;
+$grey: #BFBFBF;
+$dark-grey: #858585;
+$white: #FFFFFF;
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+// div{border:1px dotted red}
+
 body{
   font-family: Arial, Verdana, sans-serif;
+  color: $dark-grey;
 }
 
+h1{
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+p {
+  margin-top: 10px;
+}
+
+///// Container for all HTML Elements //////
 .container{
   width: 325px;
   margin: 0 auto;
@@ -24,7 +44,7 @@ body{
 .header{
   @media screen and (min-width: 800px) {
     padding-top: 10px;
-    border-top: dotted 1px #CCCCCC;
+    border-top: dotted 1px $light-grey;
   }
 }
 
@@ -46,31 +66,38 @@ body{
     width: 330px;
     font-size: 0.75em;
     padding-left: 10px;
-    color: #BFBFBF;
-    border-left: solid 1px #CCCCCC;
+    color: $grey;
+    border-left: solid 1px $light-grey;
   }
 }
 
-.main-image {
+.cover-photo {
+  margin-top: 40px;
   @media screen and (min-width: 800px) {
     margin-top: 50px;
   }
 }
 
-.main-image img{
+.cover-photo img{
   width: 325px;
+  height: 150px;
+  object-fit: cover;
   @media screen and (min-width: 800px) {
     width: 800px;
+    height: 300px;
   }
 }
 
 hr{
-  border-top: solid 1px #CCCCCC;
+  border-top: solid 1px $light-grey;
   margin: 10px 0;
 }
 
+////////////////////////////////
+///// Gallery on Home Page /////
+////////////////////////////////
 .gallery{
-  display:flex;
+  display: flex;
   flex-flow: row wrap;
 }
 
@@ -97,7 +124,112 @@ hr{
   object-fit: cover;
   @media screen and (min-width: 800px) {
     width: 260px;
-    display: block;
-    margin: 0 auto;
   }
+}
+
+////////////////////////////
+///// For Main Content /////
+////////////////////////////
+.main-content{
+  margin-top: 40px;
+  @media screen and (min-width: 800px) {
+    margin-top: 50px;
+  }
+}
+
+///////////////////////////////
+//// Single Gallery Photo /////
+///////////////////////////////
+.left-main-photo {
+  width: 325px;
+  float: left;
+  font-size: 0.9em;
+  @media screen and (min-width: 800px) {
+    width: 510px;
+  }
+}
+
+.left-main-photo img {
+  width: 100%;
+}
+
+.left-main-photo p a{
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  border: 1px $light-grey solid;
+  color: $dark-grey;
+  padding: 8px;
+}
+
+.left-main-photo p a:hover{
+  color: $white;
+  background-color: $dark-grey;
+  border: 1px $dark-grey solid;
+}
+
+.right-small-photos {
+  display: none;
+  font-size: 0.9em;
+  @media screen and (min-width: 800px) {
+    display: block;
+    float: right;
+    width: 260px;
+    height: 200px;
+  }
+}
+
+.right-small-photos img {
+  width: 100%;
+  margin-bottom: 20px;
+  @media screen and (min-width: 800px) {
+    width: 260px;
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+//////////////////////////
+///// Add Photo Form /////
+//////////////////////////
+.form-container {
+  width: 325px;
+  float: left;
+  @media screen and (min-width: 800px) {
+    width: 510px;
+  }
+}
+
+form p {
+  font-size: 0.9em;
+}
+
+input, textarea {
+  padding: 5px;
+  border: solid 1px $light-grey;
+  outline: 0;
+  width: 325px;
+  background: $white;
+  }
+
+textarea {
+  width: 325px;
+  max-width: 325px;
+  height: 150px;
+  line-height: 150%;
+  @media screen and (min-width: 800px) {
+    width: 510px;
+    max-width: 510px;
+  }
+}
+
+input:hover, textarea:hover,
+input:focus, textarea:focus {
+  border-color: $dark-grey;
+}
+
+input[type=submit]{
+  text-transform: uppercase;
 }
