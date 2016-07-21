@@ -3,6 +3,19 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     title Express Gallery || Page Not Found
+    link(href='/css/styles.css', rel='stylesheet')
   body
-      h1 Page Not Found
-      p Return to the #[a(href="/") Home Page]
+    div.container
+      div(class=['header', 'clearfix'])
+        div.logo
+          a(href='/')
+            img(src='/images/logo.jpg')
+        div.summary
+          p Welcome to our online portfolio, we are small group of passionate designers and architects, looking to change and create amazing digital images to inspire others to follow in our innovative steps. Free Architect WordPress Theme
+      div.cover-photo
+        img(src='/images/404.jpg')
+      hr
+      div.bad-request
+        h1 Page Not Found
+        p We can't seem to find the page you're looking for.
+        p Return to the #[a(href="/") Home Page]

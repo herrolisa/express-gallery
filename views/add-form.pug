@@ -2,13 +2,31 @@ doctype html
 html(lang="en")
   head
     meta(charset="UTF-8")
-    title Express Gallery || Add Image
+    title Express Gallery || Add A New Photo
+    link(href='/css/styles.css', rel='stylesheet')
   body
-    form(action="/gallery", method="post", enctype="application/x-www-form-urlencoded")
-      label(for="link") Link
-      input(type="text", name="link")
-      label(for="author") Author
-      input(type="text", name="author")
-      label(for="description") Description
-      input(type="text", name="description")
-      input(type="submit", value="Submit Photo")
+    div.container
+      div(class=['header', 'clearfix'])
+        div.logo
+          a(href='/')
+            img(src='/images/logo.jpg')
+        div.summary
+          p Welcome to our online portfolio, we are small group of passionate designers and architects, looking to change and create amazing digital images to inspire others to follow in our innovative steps. Free Architect WordPress Theme
+      div.main-content
+        div.form-container
+          h1 Add A New Photo
+          form(action="/gallery", method="post", enctype="application/x-www-form-urlencoded")
+            p.form-link
+              label(for="link") Link
+              br
+              input(type="text", name="link", placeholder="http://www.sample.com/image.jpg")
+            p.form-author
+              label(for="author") Author
+              br
+              input(type="text", name="author", placeholder="Your Name")
+            p.form-description
+              label(for="description") Description
+              br
+              textarea(name="description", placeholder="Write a short description about the image.")
+            p.form-submit
+              input(type="submit", value="Submit Photo")

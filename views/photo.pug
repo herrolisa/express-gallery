@@ -3,19 +3,25 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     title Express Gallery || #{id}
-    link(href='../css/styles.css', rel='stylesheet')
+    link(href='/css/styles.css', rel='stylesheet')
   body
     div.container
       div(class=['header', 'clearfix'])
         div.logo
-          img(src='../images/logo.jpg')
+          a(href='/')
+            img(src='/images/logo.jpg')
         div.summary
           p Welcome to our online portfolio, we are small group of passionate designers and architects, looking to change and create amazing digital images to inspire others to follow in our innovative steps. Free Architect WordPress Theme
-      div.display-photo
-        img(src= link)
-        p Uploaded by #{author}
-        p= description
-        p
-          a(href= "/gallery/" + id + "/edit") Edit This Photo
-        p
-          a(href= "#") Delete This Photo
+      div(class=['main-content', 'clearfix'])
+        div.left-main-photo
+          img(src= link)
+          p Uploaded by #{author}
+          p= description
+          p
+            a(href= "/gallery/" + id + "/edit") Edit This Photo
+          p
+            a(href= "#") Delete This Photo
+        div.right-small-photos
+          img(src= link)
+          img(src= link)
+          img(src= link)
