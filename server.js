@@ -83,6 +83,10 @@ app.delete('/gallery/:id', function (req, res) {
   });
 });
 
+app.use('*', function (err, res, next) {
+  res.status(404).render('404');
+});
+
 var server = app.listen(8080, function () {
   var host = server.address().address;
   var port = server.address().port;
