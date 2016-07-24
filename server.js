@@ -27,7 +27,12 @@ app.use(methodOverride(function(req, res){
 
 //GET /index.html
 app.get('/', function (req, res) {
-  res.render('index');
+  Gallery.display(function (err, result) {
+    if (err) throw err;
+    else{
+      res.render('index', {result: result});
+    }
+  });
 });
 
 //GET /gallery/new (page with form to add new photo to gallery)

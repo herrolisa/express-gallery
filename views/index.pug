@@ -16,21 +16,9 @@ html(lang="en")
         img(src='http://www.dessign.net/architekttheme/wp-content/uploads/architekt21-959x349.jpg')
       hr
       div.gallery
-        div.gallery-post
-          a(href='#')
-            img(src='http://67.media.tumblr.com/30b1b0d0a42bca3759610242a1ff0348/tumblr_nnjxy1GQAA1tpo3v2o1_540.jpg')
-        div.gallery-post
-          a(href='#')
-            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
-        div.gallery-post
-          a(href='#')
-            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
-        div.gallery-post
-          a(href='#')
-            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
-        div.gallery-post
-          a(href='#')
-            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
-        div.gallery-post
-          a(href='#')
-            img(src='http://www.dessign.net/architekttheme/wp-content/uploads/Mountain_Cabin-blog1-306x215.jpg')
+        - for (var i = 0; i < result.length; i++) {
+          div.gallery-post
+            a(href='/gallery/' + result[i].id)
+              img(src= result[i].link)
+        - }
+

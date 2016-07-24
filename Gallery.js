@@ -5,6 +5,7 @@ var JSON_DATA_PATH = path.resolve('data', 'gallery.json');
 module.exports = {
   create: addToGallery,
   find: displayPhoto,
+  display: displayGallery,
   form: displayEditForm,
   edit: editPhoto,
   delete: deletePhoto
@@ -38,6 +39,18 @@ function displayPhoto(id, callback) {
       callback(true);
     }else{
       callback(null, galleries[i]);
+    }
+  });
+}
+
+function displayGallery(callback) {
+  fs.readFile(JSON_DATA_PATH, 'utf8', function (err, json){
+    if (err) throw err;
+    var galleries = JSON.parse(json);
+    if(galleries === undefined){
+      callback(true);
+    }else{
+      callback(null, galleries);
     }
   });
 }
