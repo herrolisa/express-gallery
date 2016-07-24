@@ -153,8 +153,9 @@ hr{
   width: 100%;
 }
 
-.left-main-photo p a{
+.left-main-photo p a, .left-main-photo input{
   display: block;
+  width: 100%;
   text-decoration: none;
   text-align: center;
   font-size: 0.8em;
@@ -162,9 +163,10 @@ hr{
   border: 1px $light-grey solid;
   color: $dark-grey;
   padding: 8px;
+  margin-top: 10px;
 }
 
-.left-main-photo p a:hover{
+.left-main-photo p a:hover, .left-main-photo input:hover{
   color: $white;
   background-color: $dark-grey;
   border: 1px $dark-grey solid;
