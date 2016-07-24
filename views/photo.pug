@@ -19,8 +19,9 @@ html(lang="en")
           p= description
           p
             a(href= "/gallery/" + id + "/edit") Edit This Photo
-          p
-            a(href= "#") Delete This Photo
+          form(action="/gallery/" + id, method="post", enctype="application/x-www-form-urlencoded")
+            input(type="hidden", name="_method", value="DELETE")
+            input(type="submit", value="Delete This Photo")
         div.right-small-photos
           img(src= link)
           img(src= link)

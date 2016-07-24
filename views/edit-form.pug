@@ -15,7 +15,8 @@ html(lang="en")
       div.main-content
         div.form-container
           h1 Edit The Photo
-          form(action="/gallery/:id", method="put", enctype="application/x-www-form-urlencoded")
+          form(action="/gallery/" + id, method="post", enctype="application/x-www-form-urlencoded")
+            input(type="hidden", name="_method", value="PUT")
             p.form-link
               label(for="link") Link
               br

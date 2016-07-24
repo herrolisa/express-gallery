@@ -1,4 +1,5 @@
 var morgan = require('morgan');
+var methodOverride = require('method-override');
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -14,6 +15,16 @@ app.use(express.static('public'));
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(methodOverride('_method'));
+app.use(methodOverride(function(req, res){
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
+
 //GET /index.html
 app.get('/', function (req, res) {
   res.render('index');
@@ -26,8 +37,6 @@ app.get('/gallery/new', function (req, res) {
 
 //POST to /gallery (from the form of /gallery/new)
 app.post('/gallery', function (req, res) {
-  console.log(req.body);
-  console.log(req.body.link);
   Gallery.create(req.body, function (err, result) {
     if (err) throw err;
     // res.redirect('/'); //redirect to home page
@@ -54,7 +63,7 @@ app.get('/gallery/:id/edit', function (req, res) {
     if (err){
       res.status(404).render('404');
     }else{
-      res.render('edit-form');
+      res.render('edit-form', {id: id});
     }
   });
 });
