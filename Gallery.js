@@ -38,7 +38,7 @@ function displayPhoto(id, callback) {
     if(galleries[i] === undefined){
       callback(true);
     }else{
-      callback(null, galleries[i]);
+      callback(null, galleries[i], galleries);
     }
   });
 }

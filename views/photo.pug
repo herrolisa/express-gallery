@@ -14,15 +14,20 @@ html(lang="en")
           p Welcome to our online portfolio, we are small group of passionate designers and architects, looking to change and create amazing digital images to inspire others to follow in our innovative steps. Free Architect WordPress Theme
       div(class=['main-content', 'clearfix'])
         div.left-main-photo
-          img(src= link)
-          p Uploaded by #{author}
+          img(src= mainPhoto.link)
+          p Uploaded by #{mainPhoto.author}
           p= description
           p
-            a(href= "/gallery/" + id + "/edit") Edit This Photo
-          form(action="/gallery/" + id, method="post", enctype="application/x-www-form-urlencoded")
+            a(href= "/gallery/" + mainPhoto.id + "/edit") Edit This Photo
+          form(action="/gallery/" + mainPhoto.id, method="post", enctype="application/x-www-form-urlencoded")
             input(type="hidden", name="_method", value="DELETE")
             input(type="submit", value="Delete This Photo")
         div.right-small-photos
-          img(src= link)
-          img(src= link)
-          img(src= link)
+          - var galleryLength = 3;
+          - for (var i = 0; i < galleryLength; i++) {
+            if i + 1 === mainPhoto.id
+              - galleryLength = galleryLength + 1;
+            else
+              a(href='/gallery/' + gallery[i].id)
+                img(src= gallery[i].link)
+          - }

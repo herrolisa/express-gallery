@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 
 var Gallery = require('./Gallery');
 
+var db = require('./models');
+
 app.set('view engine', 'pug');
 app.set('views', path.resolve(__dirname, 'views'));
 
@@ -52,11 +54,11 @@ app.post('/gallery', function (req, res) {
 //GET /gallery/[photo id] (page with single photo and links to delete/edit)
 app.get('/gallery/:id', function (req, res) {
   var id = req.params.id;
-  Gallery.find(id, function (err, object) {
+  Gallery.find(id, function (err, object1, object2) {
     if (err){
       res.status(404).render('404');
     }else{
-      res.render('photo', object);
+      res.render('photo', {mainPhoto: object1, gallery: object2});
     }
   });
 });
@@ -105,5 +107,6 @@ var server = app.listen(8080, function () {
   var host = server.address().address;
   var port = server.address().port;
 
+  db.sequelize.sync();
   console.log('Example app listening at http://%s:%s', host, port);
 });
