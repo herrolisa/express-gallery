@@ -86,10 +86,14 @@ app.get('/gallery/:id', function(req, res) {
       id: req.params.id
     }
   }).then(function(mainPhoto) {
-    var mainObject = mainPhoto;
-    models.photos.findAll({}).then(function(photosArray) {
-      res.render('photo', {mainPhoto: mainObject, gallery: photosArray});
-    });
+    if (mainPhoto === null){
+      res.status(404).render('404');
+    }else{
+      var mainObject = mainPhoto;
+      models.photos.findAll({}).then(function(photosArray) {
+        res.render('photo', {mainPhoto: mainObject, gallery: photosArray});
+      });
+    }
   });
 });
 
