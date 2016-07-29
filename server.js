@@ -40,7 +40,7 @@ app.use(methodOverride(function(req, res){
 // });
 app.get('/', function(req, res) {
   models.photos.findAll({}).then(function(photosArray) {
-    res.render('index', {result: photosObject});
+    res.render('index', {result: photosArray});
   });
 });
 
@@ -93,14 +93,28 @@ app.get('/gallery/:id', function(req, res) {
   });
 });
 
-//GET /gallery/[photo id]/edit (page with form to edit current photo)
+// //GET /gallery/[photo id]/edit (page with form to edit current photo)
+// ////////// using data/gallery.json & Gallery.js) //////////
+// app.get('/gallery/:id/edit', function (req, res) {
+//   var id = req.params.id;
+//   Gallery.form(id, function (err) {
+//     if (err){
+//       res.status(404).render('404');
+//     }else{
+//       res.render('edit-form', {id: id});
+//     }
+//   });
+// });
 app.get('/gallery/:id/edit', function (req, res) {
-  var id = req.params.id;
-  Gallery.form(id, function (err) {
-    if (err){
+  models.photos.find({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(mainPhoto) {
+    if (mainPhoto === null){
       res.status(404).render('404');
     }else{
-      res.render('edit-form', {id: id});
+      res.render('edit-form', {id: mainPhoto});
     }
   });
 });
