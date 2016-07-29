@@ -131,14 +131,33 @@ app.get('/gallery/:id/edit', function (req, res) {
 });
 
 //PUT to /gallery/[photo id]
-////////// using data/gallery.json & Gallery.js) //////////
-app.put('/gallery/:id', function (req, res) {
-  var id = req.params.id;
-  Gallery.edit(req.body, id, function (err, object) {
-    if (err){
-      res.status(404).render('404');
+// ////////// using data/gallery.json & Gallery.js) //////////
+// app.put('/gallery/:id', function (req, res) {
+//   var id = req.params.id;
+//   Gallery.edit(req.body, id, function (err, object) {
+//     if (err){
+//       res.status(404).render('404');
+//     }else{
+//       res.render('photo', object);
+//     }
+//   });
+// });
+app.put('/gallery/:id', function(req, res) {
+  db.photos.find({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(photo) {
+    if(photo){
+      photo.updateAttributes({
+        link: req.body.link,
+        author: req.body.author,
+        description: req.body.description
+      }).then(function(photo) {
+        res.redirect('/');
+      });
     }else{
-      res.render('photo', object);
+      res.status(404).render('404');
     }
   });
 });
