@@ -38,7 +38,6 @@ app.use(methodOverride(function(req, res){
 //     }
 //   });
 // });
-
 app.get('/', function(req, res) {
   models.photos.findAll({}).then(function(photosObject) {
     res.render('index', {result: photosObject});
@@ -51,11 +50,21 @@ app.get('/gallery/new', function (req, res) {
 });
 
 //POST to /gallery (from the form of /gallery/new)
-app.post('/gallery', function (req, res) {
-  Gallery.create(req.body, function (err, result) {
-    if (err) throw err;
-    res.redirect('/'); //redirect to home page
-    // res.render('photo', {link: req.body.link, author: req.body.author, description: req.body.description});
+// ////////// using data/gallery.json & Gallery.js) //////////
+// app.post('/gallery', function (req, res) {
+//   Gallery.create(req.body, function (err, result) {
+//     if (err) throw err;
+//     res.redirect('/'); //redirect to home page
+//     // res.render('photo', {link: req.body.link, author: req.body.author, description: req.body.description});
+//   });
+// });
+app.post('/gallery', function(req, res) {
+  models.photos.create({
+    link: req.body.link,
+    author: req.body.author,
+    description: req.body.description
+  }).then(function() {
+    res.redirect('/');
   });
 });
 
