@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 var Gallery = require('./Gallery');
 
 var db = require('./models');
-var models = require('./models/index');
 
 app.set('view engine', 'pug');
 app.set('views', path.resolve(__dirname, 'views'));
@@ -39,7 +38,7 @@ app.use(methodOverride(function(req, res){
 //   });
 // });
 app.get('/', function(req, res) {
-  models.photos.findAll({}).then(function(photosArray) {
+  db.photos.findAll({}).then(function(photosArray) {
     res.render('index', {result: photosArray});
   });
 });
@@ -59,7 +58,7 @@ app.get('/gallery/new', function (req, res) {
 //   });
 // });
 app.post('/gallery', function(req, res) {
-  models.photos.create({
+  db.photos.create({
     link: req.body.link,
     author: req.body.author,
     description: req.body.description
@@ -81,20 +80,24 @@ app.post('/gallery', function(req, res) {
 //   });
 // });
 app.get('/gallery/:id', function(req, res) {
-  models.photos.find({
-    where: {
-      id: req.params.id
-    }
-  }).then(function(mainPhoto) {
-    if (mainPhoto === null){
-      res.status(404).render('404');
-    }else{
-      var mainObject = mainPhoto;
-      models.photos.findAll({}).then(function(photosArray) {
-        res.render('photo', {mainPhoto: mainObject, gallery: photosArray});
-      });
-    }
-  });
+  if (isNaN(Number(req.params.id))){
+    res.status(404).render('404');
+  }else{
+    db.photos.find({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(mainPhoto) {
+      if (mainPhoto === null){
+        res.status(404).render('404');
+      }else{
+        var mainObject = mainPhoto;
+        db.photos.findAll({}).then(function(photosArray) {
+          res.render('photo', {mainPhoto: mainObject, gallery: photosArray});
+        });
+      }
+    });
+  }
 });
 
 // //GET /gallery/[photo id]/edit (page with form to edit current photo)
@@ -110,21 +113,24 @@ app.get('/gallery/:id', function(req, res) {
 //   });
 // });
 app.get('/gallery/:id/edit', function (req, res) {
-  models.photos.find({
-    where: {
-      id: req.params.id
-    }
-  }).then(function(mainPhoto) {
-    if (mainPhoto === null){
-      res.status(404).render('404');
-    }else{
-      res.render('edit-form', {id: mainPhoto});
-    }
-  });
+  if (isNaN(Number(req.params.id))){
+    res.status(404).render('404');
+  }else{
+    db.photos.find({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(mainPhoto) {
+      if (mainPhoto === null){
+        res.status(404).render('404');
+      }else{
+        res.render('edit-form', {id: mainPhoto});
+      }
+    });
+  }
 });
 
-//PUT to /gallery/[photo id]
-// ////////// using data/gallery.json & Gallery.js) //////////
+// PUT to /gallery/[photo id]
 app.put('/gallery/:id', function (req, res) {
   var id = req.params.id;
   Gallery.edit(req.body, id, function (err, object) {
@@ -137,6 +143,7 @@ app.put('/gallery/:id', function (req, res) {
 });
 
 //DELETE [photo id]
+// ////////// using data/gallery.json & Gallery.js) //////////
 // app.delete('/gallery/:id', function (req, res) {
 //   var id = req.params.id;
 //   Gallery.delete(id, function (err) {
@@ -148,7 +155,7 @@ app.put('/gallery/:id', function (req, res) {
 //   });
 // });
 app.delete('/gallery/:id', function(req, res) {
-  models.photos.destroy({
+  db.photos.destroy({
     where: {
       id: req.params.id
     }
