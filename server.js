@@ -39,7 +39,7 @@ app.use(methodOverride(function(req, res){
 //   });
 // });
 app.get('/', function(req, res) {
-  models.photos.findAll({}).then(function(photosObject) {
+  models.photos.findAll({}).then(function(photosArray) {
     res.render('index', {result: photosObject});
   });
 });
@@ -68,15 +68,28 @@ app.post('/gallery', function(req, res) {
   });
 });
 
-//GET /gallery/[photo id] (page with single photo and links to delete/edit)
-app.get('/gallery/:id', function (req, res) {
-  var id = req.params.id;
-  Gallery.find(id, function (err, object1, object2) {
-    if (err){
-      res.status(404).render('404');
-    }else{
-      res.render('photo', {mainPhoto: object1, gallery: object2});
+// //GET /gallery/[photo id] (page with single photo and links to delete/edit)
+// ////////// using data/gallery.json & Gallery.js) //////////
+// app.get('/gallery/:id', function (req, res) {
+//   var id = req.params.id;
+//   Gallery.find(id, function (err, object1, object2) {
+//     if (err){
+//       res.status(404).render('404');
+//     }else{
+//       res.render('photo', {mainPhoto: object1, gallery: object2});
+//     }
+//   });
+// });
+app.get('/gallery/:id', function(req, res) {
+  models.photos.find({
+    where: {
+      id: req.params.id
     }
+  }).then(function(mainPhoto) {
+    var mainObject = mainPhoto;
+    models.photos.findAll({}).then(function(photosArray) {
+      res.render('photo', {mainPhoto: mainObject, gallery: photosArray});
+    });
   });
 });
 
@@ -91,6 +104,7 @@ app.get('/gallery/:id/edit', function (req, res) {
     }
   });
 });
+
 
 //PUT to /gallery/[photo id]
 app.put('/gallery/:id', function (req, res) {
