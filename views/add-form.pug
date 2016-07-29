@@ -19,14 +19,14 @@ html(lang="en")
             p.form-link
               label(for="link") Link
               br
-              input(type="text", name="link", placeholder="http://www.sample.com/image.jpg")
+              input(type="text", name="link", placeholder="http://www.sample.com/image.jpg", required)
             p.form-author
               label(for="author") Author
               br
-              input(type="text", name="author", placeholder="Your Name")
+              input(type="text", name="author", placeholder="Your Name", required)
             p.form-description
               label(for="description") Description
               br
-              textarea(name="description", placeholder="Write a short description about the image.")
+              textarea(name="description", placeholder="Write a short description about the image.", required)
             p.form-submit
               input(type="submit", value="Submit Photo")
