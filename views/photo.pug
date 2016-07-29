@@ -15,8 +15,8 @@ html(lang="en")
       div(class=['main-content', 'clearfix'])
         div.left-main-photo
           img(src= mainPhoto.link)
-          p Uploaded by #{mainPhoto.author}
-          p= description
+          p Uploaded by: #{mainPhoto.author}
+          p= mainPhoto.description
           p
             a(href= "/gallery/" + mainPhoto.id + "/edit") Edit This Photo
           form(action="/gallery/" + mainPhoto.id, method="post", enctype="application/x-www-form-urlencoded")
@@ -25,9 +25,10 @@ html(lang="en")
         div.right-small-photos
           - var galleryLength = 3;
           - for (var i = 0; i < galleryLength; i++) {
-            if i + 1 === mainPhoto.id
+            - var randomIndex = Math.floor(Math.random() * gallery.length)
+            if gallery[randomIndex].id === mainPhoto.id
               - galleryLength = galleryLength + 1;
             else
-              a(href='/gallery/' + gallery[i].id)
-                img(src= gallery[i].link)
+              a(href='/gallery/' + gallery[randomIndex].id)
+                img(src= gallery[randomIndex].link)
           - }
