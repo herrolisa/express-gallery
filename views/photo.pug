@@ -2,7 +2,7 @@
 html(lang="en")
   head
     meta(charset="UTF-8")
-    title Express Gallery || #{mainPhoto.id}
+    title Express Gallery || #{selectedPhoto.id}
     link(href='/css/styles.css', rel='stylesheet')
   body
     div.container
@@ -14,19 +14,19 @@ html(lang="en")
           p Welcome to our online portfolio, we are small group of passionate designers and architects, looking to change and create amazing digital images to inspire others to follow in our innovative steps. Free Architect WordPress Theme
       div(class=['main-content', 'clearfix'])
         div.left-main-photo
-          img(src= mainPhoto.link)
-          p Uploaded by: #{mainPhoto.author}
-          p= mainPhoto.description
+          img(src= selectedPhoto.link)
+          p Uploaded by: #{selectedPhoto.author}
+          p= selectedPhoto.description
           p
-            a(href= "/gallery/" + mainPhoto.id + "/edit") Edit This Photo
-          form(action="/gallery/" + mainPhoto.id, method="post", enctype="application/x-www-form-urlencoded")
+            a(href= "/gallery/" + selectedPhoto.id + "/edit") Edit This Photo
+          form(action="/gallery/" + selectedPhoto.id, method="post", enctype="application/x-www-form-urlencoded")
             input(type="hidden", name="_method", value="DELETE")
             input(type="submit", value="Delete This Photo")
         div.right-small-photos
           - var galleryLength = 3;
           - for (var i = 0; i < galleryLength; i++) {
             - var randomIndex = Math.floor(Math.random() * gallery.length)
-            if gallery[randomIndex].id === mainPhoto.id
+            if gallery[randomIndex].id === selectedPhoto.id
               - galleryLength = galleryLength + 1;
             else
               a(href='/gallery/' + gallery[randomIndex].id)

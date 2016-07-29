@@ -15,19 +15,19 @@ html(lang="en")
       div.main-content
         div.form-container
           h1 Edit The Photo
-          form(action="/gallery/" + id, method="post", enctype="application/x-www-form-urlencoded")
+          form(action="/gallery/" + selectedPhoto.id, method="post", enctype="application/x-www-form-urlencoded")
             input(type="hidden", name="_method", value="PUT")
             p.form-link
               label(for="link") Link
               br
-              input(type="text", name="link", placeholder="http://www.sample.com/image.jpg")
+              input(type="text", name="link", placeholder= selectedPhoto.link)
             p.form-author
               label(for="author") Author
               br
-              input(type="text", name="author", placeholder="Your Name")
+              input(type="text", name="author", placeholder= selectedPhoto.author)
             p.form-description
               label(for="description") Description
               br
-              textarea(name="description", placeholder="Write a short description about the image.")
+              textarea(name="description", placeholder= selectedPhoto.description)
             p.form-submit
               input(type="submit", value="Submit Changes")

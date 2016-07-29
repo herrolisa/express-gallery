@@ -93,7 +93,7 @@ app.get('/gallery/:id', function(req, res) {
       }else{
         var mainObject = mainPhoto;
         db.photos.findAll({}).then(function(photosArray) {
-          res.render('photo', {mainPhoto: mainObject, gallery: photosArray});
+          res.render('photo', {selectedPhoto: mainObject, gallery: photosArray});
         });
       }
     });
@@ -124,13 +124,14 @@ app.get('/gallery/:id/edit', function (req, res) {
       if (mainPhoto === null){
         res.status(404).render('404');
       }else{
-        res.render('edit-form', {id: mainPhoto});
+        res.render('edit-form', {selectedPhoto: mainPhoto});
       }
     });
   }
 });
 
-// PUT to /gallery/[photo id]
+//PUT to /gallery/[photo id]
+////////// using data/gallery.json & Gallery.js) //////////
 app.put('/gallery/:id', function (req, res) {
   var id = req.params.id;
   Gallery.edit(req.body, id, function (err, object) {
