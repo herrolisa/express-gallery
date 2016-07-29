@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var Gallery = require('./Gallery');
 
 var db = require('./models');
+var models = require('./models/index');
 
 app.set('view engine', 'pug');
 app.set('views', path.resolve(__dirname, 'views'));
@@ -27,13 +28,20 @@ app.use(methodOverride(function(req, res){
   }
 }));
 
-//GET /index.html
-app.get('/', function (req, res) {
-  Gallery.display(function (err, result) {
-    if (err) throw err;
-    else{
-      res.render('index', {result: result});
-    }
+// // GET /index.html
+// ////////// using data/gallery.json & Gallery.js) //////////
+// app.get('/', function (req, res) {
+//   Gallery.display(function (err, result) {
+//     if (err) throw err;
+//     else{
+//       res.render('index', {result: result});
+//     }
+//   });
+// });
+
+app.get('/', function(req, res) {
+  models.photos.findAll({}).then(function(photosObject) {
+    res.render('index', {result: photosObject});
   });
 });
 
