@@ -13,7 +13,7 @@ html(lang="en")
         div.summary
           p Welcome to our online portfolio, we are small group of passionate designers and architects, looking to change and create amazing digital images to inspire others to follow in our innovative steps. Free Architect WordPress Theme
       div.cover-photo
-        img(src='http://www.dessign.net/architekttheme/wp-content/uploads/architekt21-959x349.jpg')
+        img(src='http://www.addcovers.com/covers/eekb937qz3s1yem.jpg')
       hr
       div.gallery
         - for (var i = 0; i < result.length; i++) {
@@ -21,4 +21,7 @@ html(lang="en")
             a(href='/gallery/' + result[i].id)
               img(src= result[i].link)
         - }
+      div.add-photo
+        p
+          a(href= "/gallery/new") Add A Photo
 
