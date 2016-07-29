@@ -46,8 +46,8 @@ app.get('/gallery/new', function (req, res) {
 app.post('/gallery', function (req, res) {
   Gallery.create(req.body, function (err, result) {
     if (err) throw err;
-    // res.redirect('/'); //redirect to home page
-    res.render('photo', {link: req.body.link, author: req.body.author, description: req.body.description});
+    res.redirect('/'); //redirect to home page
+    // res.render('photo', {link: req.body.link, author: req.body.author, description: req.body.description});
   });
 });
 
@@ -94,7 +94,7 @@ app.delete('/gallery/:id', function (req, res) {
     if (err){
       res.status(404).render('404');
     }else{
-      res.render('index');
+      res.redirect('/');
     }
   });
 });
