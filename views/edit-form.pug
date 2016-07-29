@@ -20,14 +20,15 @@ html(lang="en")
             p.form-link
               label(for="link") Link
               br
-              input(type="text", name="link", placeholder= selectedPhoto.link)
+              input(type="text", name="link", value= selectedPhoto.link)
             p.form-author
               label(for="author") Author
               br
-              input(type="text", name="author", placeholder= selectedPhoto.author)
+              input(type="text", name="author", value= selectedPhoto.author)
             p.form-description
               label(for="description") Description
               br
-              textarea(name="description", placeholder= selectedPhoto.description)
+              textarea(name="description")
+                | #{selectedPhoto.description}
             p.form-submit
               input(type="submit", value="Submit Changes")
