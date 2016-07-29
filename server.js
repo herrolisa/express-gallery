@@ -123,8 +123,8 @@ app.get('/gallery/:id/edit', function (req, res) {
   });
 });
 
-
 //PUT to /gallery/[photo id]
+// ////////// using data/gallery.json & Gallery.js) //////////
 app.put('/gallery/:id', function (req, res) {
   var id = req.params.id;
   Gallery.edit(req.body, id, function (err, object) {
@@ -137,10 +137,23 @@ app.put('/gallery/:id', function (req, res) {
 });
 
 //DELETE [photo id]
-app.delete('/gallery/:id', function (req, res) {
-  var id = req.params.id;
-  Gallery.delete(id, function (err) {
-    if (err){
+// app.delete('/gallery/:id', function (req, res) {
+//   var id = req.params.id;
+//   Gallery.delete(id, function (err) {
+//     if (err){
+//       res.status(404).render('404');
+//     }else{
+//       res.redirect('/');
+//     }
+//   });
+// });
+app.delete('/gallery/:id', function(req, res) {
+  models.photos.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(photo) {
+    if (photo === null){
       res.status(404).render('404');
     }else{
       res.redirect('/');
