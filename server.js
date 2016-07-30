@@ -3,11 +3,7 @@ var methodOverride = require('method-override');
 var express = require('express');
 var app = express();
 var path = require('path');
-// var querystring = require('querystring');
 var bodyParser = require('body-parser');
-
-var Gallery = require('./Gallery');
-
 var db = require('./models');
 
 app.set('view engine', 'pug');
@@ -27,36 +23,19 @@ app.use(methodOverride(function(req, res){
   }
 }));
 
-// // GET /index.html
-// ////////// using data/gallery.json & Gallery.js) //////////
-// app.get('/', function (req, res) {
-//   Gallery.display(function (err, result) {
-//     if (err) throw err;
-//     else{
-//       res.render('index', {result: result});
-//     }
-//   });
-// });
+// GET /index.html
 app.get('/', function(req, res) {
   db.photos.findAll({}).then(function(photosArray) {
     res.render('index', {result: photosArray});
   });
 });
 
-//GET /gallery/new (page with form to add new photo to gallery)
+// GET /gallery/new (page with form to add new photo to gallery)
 app.get('/gallery/new', function (req, res) {
   res.render('add-form');
 });
 
-//POST to /gallery (from the form of /gallery/new)
-// ////////// using data/gallery.json & Gallery.js) //////////
-// app.post('/gallery', function (req, res) {
-//   Gallery.create(req.body, function (err, result) {
-//     if (err) throw err;
-//     res.redirect('/'); //redirect to home page
-//     // res.render('photo', {link: req.body.link, author: req.body.author, description: req.body.description});
-//   });
-// });
+// POST to /gallery (from the form of /gallery/new)
 app.post('/gallery', function(req, res) {
   db.photos.create({
     link: req.body.link,
@@ -67,18 +46,7 @@ app.post('/gallery', function(req, res) {
   });
 });
 
-// //GET /gallery/[photo id] (page with single photo and links to delete/edit)
-// ////////// using data/gallery.json & Gallery.js) //////////
-// app.get('/gallery/:id', function (req, res) {
-//   var id = req.params.id;
-//   Gallery.find(id, function (err, object1, object2) {
-//     if (err){
-//       res.status(404).render('404');
-//     }else{
-//       res.render('photo', {mainPhoto: object1, gallery: object2});
-//     }
-//   });
-// });
+// GET /gallery/[photo id] (page with single photo and links to delete/edit)
 app.get('/gallery/:id', function(req, res) {
   if (isNaN(Number(req.params.id))){
     res.status(404).render('404');
@@ -100,18 +68,7 @@ app.get('/gallery/:id', function(req, res) {
   }
 });
 
-// //GET /gallery/[photo id]/edit (page with form to edit current photo)
-// ////////// using data/gallery.json & Gallery.js) //////////
-// app.get('/gallery/:id/edit', function (req, res) {
-//   var id = req.params.id;
-//   Gallery.form(id, function (err) {
-//     if (err){
-//       res.status(404).render('404');
-//     }else{
-//       res.render('edit-form', {id: id});
-//     }
-//   });
-// });
+// GET /gallery/[photo id]/edit (page with form to edit current photo)
 app.get('/gallery/:id/edit', function (req, res) {
   if (isNaN(Number(req.params.id))){
     res.status(404).render('404');
@@ -130,18 +87,7 @@ app.get('/gallery/:id/edit', function (req, res) {
   }
 });
 
-//PUT to /gallery/[photo id]
-// ////////// using data/gallery.json & Gallery.js) //////////
-// app.put('/gallery/:id', function (req, res) {
-//   var id = req.params.id;
-//   Gallery.edit(req.body, id, function (err, object) {
-//     if (err){
-//       res.status(404).render('404');
-//     }else{
-//       res.render('photo', object);
-//     }
-//   });
-// });
+// PUT to /gallery/[photo id]
 app.put('/gallery/:id', function(req, res) {
   db.photos.find({
     where: {
@@ -162,18 +108,7 @@ app.put('/gallery/:id', function(req, res) {
   });
 });
 
-//DELETE [photo id]
-// ////////// using data/gallery.json & Gallery.js) //////////
-// app.delete('/gallery/:id', function (req, res) {
-//   var id = req.params.id;
-//   Gallery.delete(id, function (err) {
-//     if (err){
-//       res.status(404).render('404');
-//     }else{
-//       res.redirect('/');
-//     }
-//   });
-// });
+// DELETE [photo id]
 app.delete('/gallery/:id', function(req, res) {
   db.photos.destroy({
     where: {
