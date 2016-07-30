@@ -5,6 +5,9 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var db = require('./models');
+var passport = require('passport');
+var BasicStrategy = require('passport-http').BasicStrategy;  // Want to use Basic Authentication Strategy
+
 
 app.set('view engine', 'pug');
 app.set('views', path.resolve(__dirname, 'views'));
@@ -12,6 +15,16 @@ app.set('views', path.resolve(__dirname, 'views'));
 app.use(express.static('public'));
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+var user = { username: 'bob', password: 'secret', email: 'bob@example.com' };
+passport.use(new BasicStrategy(
+  function(username, password, done) {
+    // Example authentication strategy using
+    if ( !(username === user.username && password === user.password) ) {
+      return done(null, false);
+    }
+    return done(null, user);
+}));
 
 app.use(methodOverride('_method'));
 app.use(methodOverride(function(req, res){
@@ -31,20 +44,24 @@ app.get('/', function(req, res) {
 });
 
 // GET /gallery/new (page with form to add new photo to gallery)
-app.get('/gallery/new', function (req, res) {
-  res.render('add-form');
-});
+app.get('/gallery/new',
+  passport.authenticate('basic', { session: false }), // Require Login for '/gallery/new'
+  function(req, res) {
+    res.render('add-form');
+  });
 
 // POST to /gallery (from the form of /gallery/new)
-app.post('/gallery', function(req, res) {
-  db.photos.create({
-    link: req.body.link,
-    author: req.body.author,
-    description: req.body.description
-  }).then(function() {
-    res.redirect('/');
+app.post('/gallery',
+  passport.authenticate('basic', { session: false }), // Require Login for POST '/gallery'
+  function(req, res) {
+    db.photos.create({
+      link: req.body.link,
+      author: req.body.author,
+      description: req.body.description
+    }).then(function() {
+      res.redirect('/');
+    });
   });
-});
 
 // GET /gallery/[photo id] (page with single photo and links to delete/edit)
 app.get('/gallery/:id', function(req, res) {
@@ -69,59 +86,65 @@ app.get('/gallery/:id', function(req, res) {
 });
 
 // GET /gallery/[photo id]/edit (page with form to edit current photo)
-app.get('/gallery/:id/edit', function (req, res) {
-  if (isNaN(Number(req.params.id))){
-    res.status(404).render('404');
-  }else{
+app.get('/gallery/:id/edit',
+  passport.authenticate('basic', { session: false }), // Require Login for '/gallery/[photo id]/edit'
+  function (req, res) {
+    if (isNaN(Number(req.params.id))){
+      res.status(404).render('404');
+    }else{
+      db.photos.find({
+        where: {
+          id: req.params.id
+        }
+      }).then(function(mainPhoto) {
+        if (mainPhoto === null){
+          res.status(404).render('404');
+        }else{
+          res.render('edit-form', {selectedPhoto: mainPhoto});
+        }
+      });
+    }
+  });
+
+// PUT to /gallery/[photo id]
+app.put('/gallery/:id',
+  passport.authenticate('basic', { session: false }), // Require Login for PUT '/gallery/[photo id]'
+  function(req, res) {
     db.photos.find({
       where: {
         id: req.params.id
       }
-    }).then(function(mainPhoto) {
-      if (mainPhoto === null){
-        res.status(404).render('404');
+    }).then(function(photo) {
+      if(photo){
+        photo.updateAttributes({
+          link: req.body.link,
+          author: req.body.author,
+          description: req.body.description
+        }).then(function(photo) {
+          res.redirect('/');
+        });
       }else{
-        res.render('edit-form', {selectedPhoto: mainPhoto});
+        res.status(404).render('404');
       }
     });
-  }
-});
-
-// PUT to /gallery/[photo id]
-app.put('/gallery/:id', function(req, res) {
-  db.photos.find({
-    where: {
-      id: req.params.id
-    }
-  }).then(function(photo) {
-    if(photo){
-      photo.updateAttributes({
-        link: req.body.link,
-        author: req.body.author,
-        description: req.body.description
-      }).then(function(photo) {
-        res.redirect('/');
-      });
-    }else{
-      res.status(404).render('404');
-    }
   });
-});
 
 // DELETE [photo id]
-app.delete('/gallery/:id', function(req, res) {
-  db.photos.destroy({
-    where: {
-      id: req.params.id
-    }
-  }).then(function(photo) {
-    if (photo === null){
-      res.status(404).render('404');
-    }else{
-      res.redirect('/');
-    }
+app.delete('/gallery/:id',
+  passport.authenticate('basic', { session: false }), // Require Login to DELETE /gallery/:id''
+  function(req, res) {
+    db.photos.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(photo) {
+      if (photo === null){
+        res.status(404).render('404');
+      }else{
+        res.redirect('/');
+      }
+    });
   });
-});
 
 app.use('*', function (err, res, next) {
   res.status(404).render('404');
