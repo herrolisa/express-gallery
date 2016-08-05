@@ -13,8 +13,6 @@ $white: #FFFFFF;
   box-sizing: border-box;
 }
 
-// div{border:1px dotted red}
-
 body{
   font-family: Arial, Verdana, sans-serif;
   color: $dark-grey;
@@ -32,7 +30,7 @@ p {
 
 ///// Container for all HTML Elements //////
 .container{
-  width: 325px;
+  width: 85%;
   margin: 0 auto;
   padding-top:50px;
   @media screen and (min-width: 800px) {
@@ -79,10 +77,10 @@ p {
 }
 
 .cover-photo img{
-  width: 325px;
-  height: 200px;
-  object-fit: cover;
-  object-position: 17% 0;
+  width: 100%;
+  // height: 200px;
+  // object-fit: cover;
+  // object-position: 17% 0;
   @media screen and (min-width: 800px) {
     width: 800px;
     height: 300px;
@@ -100,6 +98,7 @@ hr{
 .gallery{
   display: flex;
   flex-flow: row wrap;
+
 }
 
 .gallery-post{
@@ -120,12 +119,23 @@ hr{
 .gallery-post img {
   display: block;
   margin: 0 auto;
-  width: 300px;
-  height: 200px;
+  width: 100%;
+  height: 275px;
+  transition: opacity .4s ease-in-out;
   object-fit: cover;
   @media screen and (min-width: 800px) {
     width: 260px;
+    height: 200px;
   }
+  &:hover{
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+  }
+}
+
+.gallery:hover img:not(:hover) {
+  opacity: 0.5;
 }
 
 .add-photo{
@@ -150,7 +160,7 @@ hr{
 //// Single Gallery Photo /////
 ///////////////////////////////
 .left-main-photo {
-  width: 325px;
+  width: 100%;
   float: left;
   font-size: 0.9em;
   @media screen and (min-width: 800px) {
@@ -187,26 +197,40 @@ hr{
   @media screen and (min-width: 800px) {
     display: block;
     float: right;
-    width: 260px;
-    height: 200px;
   }
 }
 
-.right-small-photos img {
-  width: 100%;
+.small-photo-container {
+  display: block;
+  width: 260px;
+  height: 200px;
   margin-bottom: 20px;
+}
+
+.small-photo-container img {
+  width: 100%;
+  transition: opacity .4s ease-in-out;
   @media screen and (min-width: 800px) {
     width: 260px;
     height: 200px;
     object-fit: cover;
   }
+  &:hover{
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+  }
+}
+
+.right-small-photos:hover img:not(:hover) {
+  opacity: 0.5;
 }
 
 //////////////////////////
 ///// Add Photo Form /////
 //////////////////////////
 .form-container {
-  width: 325px;
+  width: 100%;
   float: left;
   @media screen and (min-width: 800px) {
     width: 510px;
@@ -221,13 +245,13 @@ input, textarea {
   padding: 5px;
   border: solid 1px $light-grey;
   outline: 0;
-  width: 325px;
+  width: 100%;
   background: $white;
   }
 
 textarea {
-  width: 325px;
-  max-width: 325px;
+  width: 100%;
+  // max-width: 325px;
   height: 150px;
   line-height: 150%;
   @media screen and (min-width: 800px) {
