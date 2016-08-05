@@ -29,6 +29,7 @@ html(lang="en")
             if gallery[randomIndex].id === selectedPhoto.id
               - galleryLength = galleryLength + 1;
             else
-              a(href='/gallery/' + gallery[randomIndex].id)
-                img(src= gallery[randomIndex].link)
+              div.small-photo-container
+                a(href='/gallery/' + gallery[randomIndex].id)
+                  img(src= gallery[randomIndex].link)
           - }
