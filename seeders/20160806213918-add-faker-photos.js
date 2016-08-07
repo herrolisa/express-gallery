@@ -7,11 +7,17 @@ var cuteImages = ['http://pixel.nymag.com/imgs/daily/vulture/2015/09/04/04-bb8-2
 var fakerPhotosArr = [];
 for (var i = 0; i < 12; i++) {
   var newObj = {
-      link: cuteImages[i],
-      author: faker.name.firstName() + ' ' + faker.name.lastName(),
-      description: faker.lorem.sentence(),
-      createdAt : new Date(),
-      updatedAt : new Date()
+    link: cuteImages[i],
+    author: faker.name.firstName() + ' ' + faker.name.lastName(),
+    description: faker.lorem.sentence(),
+    user_id: faker.random.number(
+      {
+        min: 1,
+        max: 12
+      }
+    ),
+    createdAt : new Date(),
+    updatedAt : new Date()
   };
   fakerPhotosArr.push(newObj);
 }
