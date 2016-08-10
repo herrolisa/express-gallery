@@ -1,4 +1,4 @@
-// REQUIRED MODULES
+// REQUIRED MODULES ============================================================
 var morgan = require('morgan');
 var methodOverride = require('method-override');
 var express = require('express');
@@ -12,9 +12,8 @@ var RedisStore = require('connect-redis')(session);
 
 // PASSPORT
 var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;  // Want to use Basic Authentication Strategy
+// var BasicStrategy = require('passport-http').BasicStrategy;  // Want to use Basic Authentication Strategy
 var LocalStrategy = require('passport-local').Strategy;
-
 
 // SET UP PUG TEMPLATES
 app.set('view engine', 'pug');
@@ -43,13 +42,13 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// set up persistent login sessions
+// SET UP PERSISTENT LOGIN SESSIONS WITH PASSPORT
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    db.users.findOne({username: username}).then(function(user){
+    db.users.findOne({ where: {username: username} }).then(function(user){
       if (!user){
         return done(null, false, { message: 'Nobody here by that name'} );
       }
@@ -68,8 +67,9 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   console.log('deserialize:', id);
-  db.users.findOne({id: id}).then(function(user) {
-    done(null, user.id);
+  // adds to req.user
+  db.users.findOne({ where: {id: id}}).then(function(user) {
+    return done(null, (user && user.toJSON()));
   });
 });
 
@@ -84,7 +84,7 @@ function authenticationMiddleware (req, res, next) {
 // ROUTES ======================================================================
 // GET /index.html
 app.get('/', function(req, res) {
-  console.log(req.session);
+  console.log(req.user);
   db.photos.findAll().then(function(photosArray) {
     res.render('index', {result: photosArray});
   });
