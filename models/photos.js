@@ -7,7 +7,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        models.photos.belongsTo(models.users);
+        models.photos.belongsTo(models.users, {
+          foreignKey: 'user_id'
+        });
       }
     }
   });
