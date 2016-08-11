@@ -8,7 +8,6 @@ var fakerPhotosArr = [];
 for (var i = 0; i < 12; i++) {
   var newObj = {
     link: cuteImages[i],
-    author: faker.name.firstName() + ' ' + faker.name.lastName(),
     description: faker.lorem.sentence(),
     user_id: faker.random.number(
       {
