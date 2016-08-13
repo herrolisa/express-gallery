@@ -125,7 +125,7 @@ app.post('/gallery',
   function(req, res) {
     db.photos.create({
       link: req.body.link,
-      author: req.body.author,
+      user_id: req.user.id,
       description: req.body.description
     }).then(function() {
       res.redirect('/');
@@ -137,18 +137,25 @@ app.get('/gallery/:id', function(req, res) {
   if (isNaN(Number(req.params.id))){
     res.status(404).render('404');
   }else{
-    db.photos.find({
+    var findPhoto = db.photos.findOne({
       where: {
         id: req.params.id
-      }
-    }).then(function(mainPhoto) {
+      },
+      include: [{
+        model: db.users
+      }]
+    });
+    findPhoto.then(function (mainPhoto) {
       if (mainPhoto === null){
         res.status(404).render('404');
       }else{
-        var mainObject = mainPhoto;
-        db.photos.findAll({}).then(function(photosArray) {
-          res.render('photo', {selectedPhoto: mainObject, gallery: photosArray});
-        });
+        mainPhoto.getUser()
+          .then(function (user) {
+            var author = user.username;
+            db.photos.findAll({}).then(function (photosArray) {
+              res.render('photo', {selectedPhoto: mainPhoto, author: author, gallery: photosArray});
+            });
+          });
       }
     });
   }

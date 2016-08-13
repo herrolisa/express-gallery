@@ -15,7 +15,7 @@ html(lang="en")
       div(class=['main-content', 'clearfix'])
         div.left-main-photo
           img(src= selectedPhoto.link)
-          p Uploaded by: #{selectedPhoto.author}
+          p Uploaded by: #{author}
           p= selectedPhoto.description
           p
             a(href= "/gallery/" + selectedPhoto.id + "/edit") Edit This Photo
