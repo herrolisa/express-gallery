@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/herrolisa/express-gallery.git"
+    "url": "git+https://github.com/lisazhou/express-gallery.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/herrolisa/express-gallery/issues"
+    "url": "https://github.com/lisazhou/express-gallery/issues"
   },
-  "homepage": "https://github.com/herrolisa/express-gallery#readme",
+  "homepage": "https://github.com/lisazhou/express-gallery#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
